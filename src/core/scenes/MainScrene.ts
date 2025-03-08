@@ -3,11 +3,13 @@ import Phaser from 'phaser';
 import { Platforms } from '../systems/Platforms';
 import { BaseScene } from './BaseScene';
 
+const PLATFORM_CONFIG = {
+    name: "platforms",
+    path: "assets/sprites/platforms.png"
+}
+
 export class MainScene extends BaseScene {
-    platforms = {
-        name: "platforms",
-        path: "assets/sprites/platforms.png"
-    }
+    platforms!: Platforms;
     player!: Phaser.Physics.Arcade.Sprite;
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
 
@@ -16,16 +18,13 @@ export class MainScene extends BaseScene {
     }
 
     preload() {
-        Platforms.preload({
-            scene: this,
-            assets: {
-                name: this.platforms.name,
-                path: this.platforms.path,
-                frameWidth: 16,
-                frameHeight: 16,
+        this.platforms = new Platforms({
+            scene: this, config: {
+                name: PLATFORM_CONFIG.name,
+                path: PLATFORM_CONFIG.path,
+                frameSize: 16,
                 scale: 4
             }
-
         });
 
         this.load.spritesheet("player", "assets/sprites/knight.png", {
@@ -35,24 +34,19 @@ export class MainScene extends BaseScene {
     }
 
     create() {
-        const platforms = new Platforms({
-            scene: this,
-            config: { name: this.platforms.name, scale: 4 }
-        });
-
-        platforms.create({ spriteNumber: 0, positionX: 32, positionY: 596 });
-        platforms.create({ spriteNumber: 1, positionX: 96, positionY: 596 });
-        platforms.create({ spriteNumber: 2, positionX: 160, positionY: 596 });
+        this.platforms.create({ spriteNumber: 0, positionX: 32, positionY: 596 });
+        this.platforms.create({ spriteNumber: 1, positionX: 96, positionY: 596 });
+        this.platforms.create({ spriteNumber: 2, positionX: 160, positionY: 596 });
 
         this.player = this.physics.add.sprite(100, 450, 'player').setScale(4);
-        this.physics.add.collider(this.player, platforms.Platforms);
+        this.physics.add.collider(this.player, this.platforms.Platforms);
 
         if (this.input && this.input.keyboard) {
             this.cursors = this.input.keyboard.createCursorKeys();
         }
 
         this.debug({
-            gameObjects: [...platforms.Platforms.getChildren()]
+            gameObjects: [...this.platforms.Platforms.getChildren()]
         });
     }
 
@@ -69,6 +63,6 @@ export class MainScene extends BaseScene {
             this.player.setVelocityY(-330);
         }
 
-        this.debugUpdatedGameObject({ gameObject: this.player });
+        this.debugUpdated({ gameObject: this.player });
     }
 }

@@ -1,17 +1,5 @@
 import Phaser from 'phaser';
 
-interface AssetsProps {
-    name: string;
-    path: string;
-    frameWidth: number;
-    frameHeight: number;
-    scale: number;
-};
-
-interface PreloadProps {
-    scene: Phaser.Scene;
-    assets: AssetsProps;
-}
 
 interface CreatePlataformProps {
     spriteNumber: number;
@@ -20,6 +8,8 @@ interface CreatePlataformProps {
 }
 interface Config {
     name: string,
+    path: string,
+    frameSize: number,
     scale: number;
 }
 
@@ -29,27 +19,31 @@ interface PlataformProps {
 }
 
 export class Platforms {
+    private scene: Phaser.Scene
     private platforms!: Phaser.Physics.Arcade.StaticGroup;
     private config: Config;
 
-    static preload({ scene, assets }: PreloadProps) {
-        scene.load.spritesheet(assets.name, assets.path, {
-            frameWidth: assets.frameWidth,
-            frameHeight: assets.frameHeight
+    constructor({ scene, config }: PlataformProps) {
+        this.scene = scene;
+        this.platforms = this.scene.physics.add.staticGroup();
+        this.config = config;
+
+        this.preload();
+    }
+
+    preload() {
+        this.scene.load.spritesheet(this.config.name, this.config.path, {
+            frameWidth: this.config.frameSize,
+            frameHeight: this.config.frameSize,
         });
     }
 
-    constructor({ scene, config }: PlataformProps) {
-        this.platforms = scene.physics.add.staticGroup();
-        this.config = config;
-    }
-
-    create(assets: CreatePlataformProps) {
+    create(sprite: CreatePlataformProps) {
         this.platforms.create(
-            assets.positionX,
-            assets.positionY,
+            sprite.positionX,
+            sprite.positionY,
             this.config.name,
-            assets.spriteNumber
+            sprite.spriteNumber
         ).setScale(this.config.scale).refreshBody();
 
     }

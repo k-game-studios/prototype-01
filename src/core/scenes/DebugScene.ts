@@ -32,7 +32,7 @@ export class DebugScene extends Phaser.Scene {
         }
     }
 
-    public debugUpdatedGameObject({ gameObject }: { gameObject: Phaser.GameObjects.GameObject }) {
+    public debugUpdated({ gameObject }: { gameObject: Phaser.GameObjects.GameObject }) {
         const sprite = gameObject as Phaser.GameObjects.Sprite;
         this.drawDebugRect(sprite, true); 
         
