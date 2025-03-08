@@ -45,22 +45,50 @@ export class MainScene extends BaseScene {
     }
 
     create() {
-        this.platforms.create({ spriteNumber: 0, positionX: 32, positionY: 596 });
-        this.platforms.create({ spriteNumber: 1, positionX: 96, positionY: 596 });
-        this.platforms.create({ spriteNumber: 2, positionX: 160, positionY: 596 });
+        Array(4).fill(0).map((_, i) => {
+            const posX = 32 + (i * 128) - 4;
+            const posY = 596;
+
+            this.platforms.create({ spriteNumber: 1, positionX: posX, positionY: posY });
+            this.platforms.create({ spriteNumber: 2, positionX: posX + 64, positionY: posY });
+        });
 
 
-        this.player.create(32, 448);
+        Array(2).fill(0).map((_, i) => {
+            const posX = 596 + 48 + (i * 128) - 4;
+            const posY = 596;
+
+            this.platforms.create({ spriteNumber: 1, positionX: posX, positionY: posY });
+            this.platforms.create({ spriteNumber: 2, positionX: posX + 64, positionY: posY });
+        });
+
+        
+        // Array(4).fill(0).map((_, i) => {
+        //     const posX = 756 + (i * 128) - 4;
+        //     const posY = 532;
+
+        //     this.platforms.create({ spriteNumber: 1, positionX: posX, positionY: posY });
+        //     this.platforms.create({ spriteNumber: 2, positionX: posX + 64, positionY: posY });
+        // });
+        
+
+        this.player.create(320, 448);
         this.physics.add.collider(
             this.player.Entity,
             this.platforms.Entity.getChildren()
         );
-        
 
-        this.physics.world.createDebugGraphic();
+        // this.physics.world.createDebugGraphic();
     }
 
     update() {
         this.player.update();
+
+        const playerBounds = this.player.Entity.getBounds();
+        const worldBounds = this.physics.world.bounds;
+
+        if (playerBounds.bottom > worldBounds.bottom) {
+            this.player.Entity.setPosition(320, 448);
+        }
     }
 }

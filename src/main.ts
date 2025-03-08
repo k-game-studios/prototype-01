@@ -5,7 +5,7 @@ import Phaser from 'phaser';
 const physics: Phaser.Types.Core.PhysicsConfig = {
   default: 'arcade',
   arcade: {
-    gravity: { y: 300, x: 0 },
+    gravity: { y: 4000, x: 0 },
     debug: false,
   },
 }
