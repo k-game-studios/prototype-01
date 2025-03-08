@@ -14,6 +14,7 @@ export class Player {
     private config: ConstructorProps;
     private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
     private isJumping: boolean = false;
+    private keyAlt!: Phaser.Input.Keyboard.Key;
 
     constructor(config: ConstructorProps) {
         this.scene = config.scene;
@@ -37,6 +38,8 @@ export class Player {
 
         if (this.scene.input && this.scene.input.keyboard) {
             this.cursors = this.scene.input.keyboard.createCursorKeys();
+            this.keyAlt = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ALT);
+        
         }
 
         this.scene.anims.create({
@@ -56,7 +59,7 @@ export class Player {
         this.scene.anims.create({
             key: 'jump',
             // frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 40, end: 48 }),
-            frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 18, end: 23 }),
+            frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 18, end: 20 }),
             frameRate: 18,
             repeat: 0
         });
@@ -105,7 +108,7 @@ export class Player {
             }
         }
 
-        if (this.cursors.up.isDown && onGround) {
+        if (this.keyAlt.isDown && onGround) {
             this.entity.setVelocityY(-960);
             this.isJumping = true;
             this.entity.play('jump');
