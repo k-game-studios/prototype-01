@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import { Platforms } from '../systems/Platforms';
-import { BaseScene } from './BaseScene';
+import { FPSScene } from './FPSScene';
 import { Player } from '../entities/Player';
 
 const PLATFORM_CONFIG = {
@@ -14,7 +14,7 @@ const PLAYER_CONFIG = {
     path: "assets/sprites/knight.png",
 }
 
-export class MainScene extends BaseScene {
+export class MainScene extends FPSScene {
     private platforms!: Platforms;
     private player!: Player;
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -40,6 +40,7 @@ export class MainScene extends BaseScene {
             scale: 4
         });
 
+        super.preload();
         this.platforms.preload();
         this.player.preload();
     }
@@ -81,14 +82,8 @@ export class MainScene extends BaseScene {
         // this.physics.world.createDebugGraphic();
     }
 
-    update() {
+    update(time: number) {
         this.player.update();
-
-        const playerBounds = this.player.Entity.getBounds();
-        const worldBounds = this.physics.world.bounds;
-
-        if (playerBounds.bottom > worldBounds.bottom) {
-            this.player.Entity.setPosition(320, 448);
-        }
+        super.update(time);
     }
 }

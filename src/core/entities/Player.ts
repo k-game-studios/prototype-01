@@ -90,13 +90,13 @@ export class Player {
                 this.entity.play('down');
             }
         } else if (this.cursors.left.isDown) {
-            this.entity.setVelocityX(-160);
+            this.entity.setVelocityX(-220);
             if (!this.isJumping && this.entity.anims.currentAnim?.key !== 'run') {
                 this.entity.play('run');
             }
             this.entity.setFlipX(true);
         } else if (this.cursors.right.isDown) {
-            this.entity.setVelocityX(160);
+            this.entity.setVelocityX(220);
             if (!this.isJumping && this.entity.anims.currentAnim?.key !== 'run') {
                 this.entity.play('run');
             }
@@ -112,6 +112,13 @@ export class Player {
             this.entity.setVelocityY(-960);
             this.isJumping = true;
             this.entity.play('jump');
+        }
+
+        const playerBounds = this.Entity.getBounds();
+        const worldBounds = this.scene.physics.world.bounds;
+
+        if (playerBounds.bottom > worldBounds.bottom) {
+            this.Entity.setPosition(320, 448);
         }
     }
 
