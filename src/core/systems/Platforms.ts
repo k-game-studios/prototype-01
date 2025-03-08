@@ -1,34 +1,28 @@
 import Phaser from 'phaser';
 
 
-interface CreatePlataformProps {
+interface CreateProps {
     spriteNumber: number;
     positionX: number;
     positionY: number;
 }
-interface Config {
+interface ConstructorProps {
     name: string,
     path: string,
     frameSize: number,
     scale: number;
-}
-
-interface PlataformProps {
     scene: Phaser.Scene,
-    config: Config
 }
 
 export class Platforms {
     private scene: Phaser.Scene
-    private platforms!: Phaser.Physics.Arcade.StaticGroup;
-    private config: Config;
+    private entity!: Phaser.Physics.Arcade.StaticGroup;
+    private config: ConstructorProps;
 
-    constructor({ scene, config }: PlataformProps) {
-        this.scene = scene;
-        this.platforms = this.scene.physics.add.staticGroup();
-        this.config = config;
-
-        this.preload();
+    constructor(props: ConstructorProps) {
+        this.scene = props.scene;
+        this.entity = this.scene.physics.add.staticGroup();
+        this.config = props;
     }
 
     preload() {
@@ -38,17 +32,17 @@ export class Platforms {
         });
     }
 
-    create(sprite: CreatePlataformProps) {
-        this.platforms.create(
-            sprite.positionX,
-            sprite.positionY,
+    create(props: CreateProps) {
+        this.entity.create(
+            props.positionX,
+            props.positionY,
             this.config.name,
-            sprite.spriteNumber
+            props.spriteNumber
         ).setScale(this.config.scale).refreshBody();
 
     }
 
-    get Platforms() {
-        return this.platforms;
+    get Entity() {
+        return this.entity;
     }
 }
