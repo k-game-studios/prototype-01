@@ -3,16 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "src/config/electron/main.js",
   "scripts": {
-    "dev": "vite",
+    "start:dev": "vite",
+    "start:dev:desktop": "electron .",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
     "electron": "^35.0.0",
     "typescript": "~5.7.2",
-    "vite": "^6.2.0",
-    "vite-plugin-phaser": "^0.0.1"
+    "vite": "^6.2.0"
   },
   "dependencies": {
     "phaser": "^3.88.2"
