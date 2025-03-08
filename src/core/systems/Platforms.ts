@@ -51,6 +51,7 @@ export class Platforms {
             this.config.name,
             assets.spriteNumber
         ).setScale(this.config.scale).refreshBody();
+
     }
 
     get Platforms() {

@@ -1,3 +1,5 @@
+import Phaser from 'phaser';
+
 import { Platforms } from '../systems/Platforms';
 import { BaseScene } from './BaseScene';
 
@@ -7,6 +9,7 @@ export class MainScene extends BaseScene {
         path: "assets/sprites/platforms.png"
     }
     player!: Phaser.Physics.Arcade.Sprite;
+    cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
 
     constructor() {
         super('MainScene');
@@ -32,21 +35,40 @@ export class MainScene extends BaseScene {
     }
 
     create() {
-        this.debug();
-
-        const platform = new Platforms({
+        const platforms = new Platforms({
             scene: this,
             config: { name: this.platforms.name, scale: 4 }
         });
 
-        platform.create({ spriteNumber: 0, positionX: 32, positionY: 596 });
-        platform.create({ spriteNumber: 1, positionX: 96, positionY: 596 });
-        platform.create({ spriteNumber: 2, positionX: 128, positionY: 596 });
+        platforms.create({ spriteNumber: 0, positionX: 32, positionY: 596 });
+        platforms.create({ spriteNumber: 1, positionX: 96, positionY: 596 });
+        platforms.create({ spriteNumber: 2, positionX: 160, positionY: 596 });
 
         this.player = this.physics.add.sprite(100, 450, 'player').setScale(4);
-        this.physics.add.collider(this.player, platform.Platforms);
+        this.physics.add.collider(this.player, platforms.Platforms);
+
+        if (this.input && this.input.keyboard) {
+            this.cursors = this.input.keyboard.createCursorKeys();
+        }
+
+        this.debug({
+            gameObjects: [...platforms.Platforms.getChildren()]
+        });
     }
 
     update() {
+        if (this.cursors && this.cursors.left.isDown) {
+            this.player.setVelocityX(-160);
+        } else if (this.cursors && this.cursors.right.isDown) {
+            this.player.setVelocityX(160);
+        } else {
+            this.player.setVelocityX(0);
+        }
+
+        if (this.cursors && this.cursors.space.isDown && this.player && this.player.body && this.player.body.touching.down) {
+            this.player.setVelocityY(-330);
+        }
+
+        this.debugUpdatedGameObject({ gameObject: this.player });
     }
 }

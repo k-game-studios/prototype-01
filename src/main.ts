@@ -2,6 +2,13 @@ import { MainScene } from './core/scenes/MainScrene';
 import './styles/global.css';
 import Phaser from 'phaser';
 
+const physics: Phaser.Types.Core.PhysicsConfig = {
+  default: 'arcade',
+  arcade: {
+    gravity: { y: 300, x: 0 },
+    debug: false,
+  },
+}
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 800,
@@ -9,13 +16,7 @@ const config: Phaser.Types.Core.GameConfig = {
   parent: 'app',
   scene: new MainScene(),
   pixelArt: true,
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 300, x: 0 },
-      debug: false,
-    },
-  },
+  physics: physics
 };
 
 function init() {
