@@ -16,7 +16,17 @@ const config: Phaser.Types.Core.GameConfig = {
   parent: 'app',
   scene: new MainScene(),
   pixelArt: true,
-  physics: physics
+  physics: physics,
+  fps: {
+    target: 60,
+    forceSetTimeOut: true
+  },
+  render: {
+    antialias: false, 
+    preserveDrawingBuffer: true,
+    pixelArt: true,
+    clearBeforeRender: true,
+  },
 };
 
 function init() {

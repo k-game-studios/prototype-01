@@ -12,9 +12,12 @@ function createWindow() {
     width: 1080,
     height: 720,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      enableWebGL2: true,
     },
+    transparent: false,
+    frame: false
   });
 
   if (process.env.NODE_ENV === 'development') {
