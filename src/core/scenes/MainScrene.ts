@@ -1,39 +1,51 @@
+import { Platforms } from '../systems/Platforms';
 import { BaseScene } from './BaseScene';
 
 export class MainScene extends BaseScene {
-    platforms!: Phaser.Physics.Arcade.StaticGroup;
+    platforms = {
+        name: "platforms",
+        path: "assets/sprites/platforms.png"
+    }
+    player!: Phaser.Physics.Arcade.Sprite;
 
     constructor() {
         super('MainScene');
     }
 
     preload() {
-        this.load.spritesheet("platforms", "assets/sprites/platforms.png", {
-            frameWidth: 16,
-            frameHeight: 16,
+        Platforms.preload({
+            scene: this,
+            assets: {
+                name: this.platforms.name,
+                path: this.platforms.path,
+                frameWidth: 16,
+                frameHeight: 16,
+                scale: 4
+            }
+
+        });
+
+        this.load.spritesheet("player", "assets/sprites/knight.png", {
+            frameWidth: 32,
+            frameHeight: 32
         });
     }
 
     create() {
-        this.debugGrid()
+        this.debug();
 
-        this.add.image(100, 100, "platforms", 0).setScale(4);
-        this.add.image(164, 100, "platforms", 1).setScale(4);
-        this.add.image(228, 100, "platforms", 2).setScale(4);
+        const platform = new Platforms({
+            scene: this,
+            config: { name: this.platforms.name, scale: 4 }
+        });
 
-        this.add.image(100, 164, "platforms", 4).setScale(4);
-        this.add.image(164, 164, "platforms", 5).setScale(4);
-        this.add.image(228, 164, "platforms", 6).setScale(4);
+        platform.create({ spriteNumber: 0, positionX: 32, positionY: 596 });
+        platform.create({ spriteNumber: 1, positionX: 96, positionY: 596 });
+        platform.create({ spriteNumber: 2, positionX: 128, positionY: 596 });
 
-        this.add.image(100, 228, "platforms", 8).setScale(4);
-        this.add.image(164, 228, "platforms", 9).setScale(4);
-        this.add.image(228, 228, "platforms", 10).setScale(4);
-
-        this.add.image(100, 292, "platforms", 12).setScale(4);
-        this.add.image(164, 292, "platforms", 13).setScale(4);
-        this.add.image(228, 292, "platforms", 14).setScale(4);
+        this.player = this.physics.add.sprite(100, 450, 'player').setScale(4);
+        this.physics.add.collider(this.player, platform.Platforms);
     }
-
 
     update() {
     }
