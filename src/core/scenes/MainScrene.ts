@@ -42,8 +42,6 @@ export class MainScene extends BaseScene {
 
         this.platforms.preload();
         this.player.preload();
-
-
     }
 
     create() {
@@ -52,16 +50,17 @@ export class MainScene extends BaseScene {
         this.platforms.create({ spriteNumber: 2, positionX: 160, positionY: 596 });
 
 
-        this.player.create(100, 450);
-        this.physics.add.collider(this.player.Entity, this.platforms.Entity);
+        this.player.create(32, 448);
+        this.physics.add.collider(
+            this.player.Entity,
+            this.platforms.Entity.getChildren()
+        );
+        
 
-        this.debug({
-            gameObjects: [...this.platforms.Entity.getChildren()]
-        });
+        this.physics.world.createDebugGraphic();
     }
 
     update() {
         this.player.update();
-        this.debugUpdated({ gameObject: this.player.Entity });
     }
 }

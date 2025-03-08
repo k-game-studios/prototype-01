@@ -30,7 +30,10 @@ export class Player {
         this.entity = this.scene.physics.add
             .sprite(startX, startY, this.config.name)
             .setScale(this.config.scale)
-            .setCollideWorldBounds(true);
+            .setCollideWorldBounds(true)
+            .setSize(16, 20)
+            .setOffset(8, 8);
+;
 
         if (this.scene.input && this.scene.input.keyboard) {
             this.cursors = this.scene.input.keyboard.createCursorKeys();
