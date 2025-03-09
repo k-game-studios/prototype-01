@@ -36,15 +36,18 @@ class Player extends Spritesheet {
         this.inputManager = new PlayerInputManager(this.scene);
         this.animationManager = new PlayerAnimationManager(this.scene, this.config.name);
         this.cameraManager = new CameraManager(this.scene, this.entity);
-        
+
         this.animationManager.create();
         this.cameraManager.create();
     }
 
     update() {
         const isJumping = !this.isOnGround();
+
         this.inputManager.handleMovement(isJumping, this.entity);
         this.inputManager.handleJump(isJumping, this.entity);
+        this.inputManager.handleAttack(isJumping, this.entity);
+
         this.checkBounds();
     }
 
@@ -52,6 +55,8 @@ class Player extends Spritesheet {
         this.entity = this.scene.physics.add.sprite(startX, startY, this.config.name)
             .setScale(this.config.scale)
             .setCollideWorldBounds(true)
+            .setSize(14, 12)
+            .setOffset(10, 18)
     }
 
     private isOnGround(): boolean {

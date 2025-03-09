@@ -7,7 +7,8 @@ class PlayerAnimationManager {
         this.setup('idle', 0, 3, 6, -1);
         this.setup('waiting', 10, 14, 6, -1);
         this.setup('run', 20, 25, 10, -1);
-        this.setup('jump', 30, 34, 8, 0);
+        this.setup('jump', 30, 34, 10, 0);
+        this.setup('attack', 40, 48, 16, 0);
     }
 
     private setup(key: string, startFrame: number, endFrame: number, frameRate: number, repeat: number) {
