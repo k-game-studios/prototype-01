@@ -1,5 +1,4 @@
-import Phaser from 'phaser';
-
+import { ConstructorProps, Spritesheet } from './Spritesheet';
 
 interface CreateProps {
     spriteNumber: number;
@@ -7,32 +6,14 @@ interface CreateProps {
     positionY: number;
 }
 
-interface ConstructorProps {
-    name: string,
-    path: string,
-    frameSize: number,
-    scale: number;
-    scene: Phaser.Scene,
-}
-
-export class Platforms {
-    private scene: Phaser.Scene
+export class Platforms extends Spritesheet {
     private entity!: Phaser.Physics.Arcade.StaticGroup;
-    private config: ConstructorProps;
 
     constructor(props: ConstructorProps) {
+        super(props);
         this.scene = props.scene;
-        this.entity = this.scene.physics.add.staticGroup();
         this.config = props;
     }
-
-    preload() {
-        this.scene.load.spritesheet(this.config.name, this.config.path, {
-            frameWidth: this.config.frameSize,
-            frameHeight: this.config.frameSize,
-        });
-    }
-
     create(props: CreateProps) {
         this.entity.create(
             props.positionX,
@@ -41,6 +22,11 @@ export class Platforms {
             props.spriteNumber
         ).setScale(this.config.scale).refreshBody();
 
+    }
+
+    preload() {
+        super.preload();
+        this.entity = this.scene.physics.add.staticGroup();
     }
 
     get Entity() {

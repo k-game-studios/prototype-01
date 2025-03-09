@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 
 import { Platforms } from '../entities/Platforms';
-import { FPSScene } from './FPSScene';
+import { FPSScene } from './helpers/FPSScene';
 import { Player } from '../entities/Player';
 
 const PLATFORM_CONFIG = {
@@ -14,7 +14,7 @@ const PLAYER_CONFIG = {
     path: "assets/sprites/knight.png",
 }
 
-export class MainScene extends FPSScene {
+class PlaygroundScrene extends FPSScene {
     private platforms!: Platforms;
     private player!: Player;
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -64,22 +64,12 @@ export class MainScene extends FPSScene {
         });
 
         
-        // Array(4).fill(0).map((_, i) => {
-        //     const posX = 756 + (i * 128) - 4;
-        //     const posY = 532;
-
-        //     this.platforms.create({ spriteNumber: 1, positionX: posX, positionY: posY });
-        //     this.platforms.create({ spriteNumber: 2, positionX: posX + 64, positionY: posY });
-        // });
-        
 
         this.player.create({ positionX: 320, positionY: 448 });
         this.physics.add.collider(
             this.player.Entity,
             this.platforms.Entity.getChildren()
         );
-
-        // this.physics.world.createDebugGraphic();
     }
 
     update(time: number) {
@@ -87,3 +77,5 @@ export class MainScene extends FPSScene {
         super.update(time);
     }
 }
+
+export { PlaygroundScrene };

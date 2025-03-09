@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { PlayerInputManager } from '../systems/PlayerInputManager';
 import { PlayerAnimationManager } from '../systems/PlayerAnimationManager';
 import { CameraManager } from '../systems/CameraManager';
+import { Spritesheet } from './Spritesheet';
 
 interface CreateProps {
     positionX: number;
@@ -16,41 +17,38 @@ interface ConstructorProps {
     scale: number;
 }
 
-class Player {
-    private scene: Phaser.Scene;
+class Player extends Spritesheet {
     private entity!: Phaser.Physics.Arcade.Sprite;
-    private config: ConstructorProps;
-    private inputHandler!: PlayerInputManager;
+    private inputManager!: PlayerInputManager;
     private animationManager!: PlayerAnimationManager;
     private cameraManager!: CameraManager;
 
     constructor(config: ConstructorProps) {
+        super(config);
         this.scene = config.scene;
         this.config = config;
     }
 
     preload() {
-        this.scene.load.spritesheet(this.config.name, this.config.path, {
-            frameWidth: this.config.frameSize,
-            frameHeight: this.config.frameSize,
-        });
+        super.preload();
     }
 
     create(props: CreateProps) {
         this.createEntity(props.positionX, props.positionY);
-        this.inputHandler = new PlayerInputManager(this.scene);
+        this.inputManager = new PlayerInputManager(this.scene);
         this.animationManager = new PlayerAnimationManager(this.scene, this.config.name);
         this.cameraManager = new CameraManager(this.scene, this.entity);
-        this.animationManager.setupAnimations();
-        this.cameraManager.setupCamera();
+        
+        this.animationManager.create();
+        this.cameraManager.create();
     }
 
     update() {
-        if (!this.inputHandler.cursors) return;
+        if (!this.inputManager.cursors) return;
 
         const isJumping = !this.isOnGround();
-        this.inputHandler.handleMovement(isJumping, this.entity);
-        this.inputHandler.handleJump(isJumping, this.entity);
+        this.inputManager.handleMovement(isJumping, this.entity);
+        this.inputManager.handleJump(isJumping, this.entity);
         this.checkBounds();
     }
 

@@ -1,4 +1,4 @@
-import { MainScene } from './core/scenes/MainScrene';
+import { PlaygroundScrene } from './core/scenes/PlaygroundScrene';
 import './styles/global.css';
 import Phaser from 'phaser';
 
@@ -14,7 +14,7 @@ const config: Phaser.Types.Core.GameConfig = {
   width: 800,
   height: 600,
   parent: 'app',
-  scene: new MainScene(),
+  scene: new PlaygroundScrene(),
   pixelArt: true,
   physics: physics,
   fps: {
