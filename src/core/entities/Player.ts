@@ -17,6 +17,8 @@ interface ConstructorProps {
     scale: number;
 }
 
+let startTime: number | null = null;
+
 class Player extends Spritesheet {
     private entity!: Phaser.Physics.Arcade.Sprite;
     private inputManager!: PlayerInputManager;
@@ -47,6 +49,7 @@ class Player extends Spritesheet {
         this.inputManager.handleMovement(isJumping, this.entity);
         this.inputManager.handleJump(isJumping, this.entity);
         this.inputManager.handleAttack(this.entity);
+        this.inputManager.handleWaiting(this.entity);
 
         this.checkBounds();
     }
