@@ -42,8 +42,6 @@ class Player extends Spritesheet {
     }
 
     update() {
-        if (!this.inputManager.cursors) return;
-
         const isJumping = !this.isOnGround();
         this.inputManager.handleMovement(isJumping, this.entity);
         this.inputManager.handleJump(isJumping, this.entity);

@@ -43,7 +43,7 @@ class PlaygroundScene extends FPSScene {
             this.player.Entity,
             this.platforms.Entity.getChildren()
         );
-        this.physics.world.setBounds(0, -200, 1472, 800);
+        this.physics.world.setBounds(0, 0, 1472, 800);
     }
 
     private createPlatforms() {
