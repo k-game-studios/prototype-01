@@ -8,8 +8,8 @@ class InputManager {
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private keyAlt: Phaser.Input.Keyboard.Key;
     private keyAttack: Phaser.Input.Keyboard.Key;
-    private movement: PlayerMovement;
     private waiting: PlayerWaiting;
+    private movement: PlayerMovement;
     private jump: PlayerJump;
     private attack: PlayerAttack;
 
@@ -18,9 +18,9 @@ class InputManager {
         this.keyAlt = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.ALT);
         this.keyAttack = this.scene.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
 
-        this.jump = new PlayerJump();
-        this.movement = new PlayerMovement();
         this.waiting = new PlayerWaiting();
+        this.movement = new PlayerMovement();
+        this.jump = new PlayerJump();
         this.attack = new PlayerAttack(this.scene);
     }
 
