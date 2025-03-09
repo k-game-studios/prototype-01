@@ -6,7 +6,7 @@
   "main": "src/config/electron/main.js",
   "scripts": {
     "start:dev": "vite",
-    "start:dev:desktop": "electron .",
+    "start:dev:desktop": "electron . --enable-accelerated-2d-canvas --enable-gpu-rasterization --disable-software-rasterizer",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
