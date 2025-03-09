@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 import { Platforms } from '../entities/Platforms';
-import { FPSScene } from './helpers/FPSScene';
+import { FPSScene } from './config/FPSScene';
 import { Player } from '../entities/Player';
 import { PLATFORM_CONFIG, PLAYER_CONFIG } from '../../constants/PlaygroundConfig';
 

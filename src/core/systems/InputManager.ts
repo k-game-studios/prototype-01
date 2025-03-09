@@ -1,10 +1,10 @@
 import Phaser from 'phaser';
-import { PlayerMovement } from './PlayerMovement';
-import { PlayerJump } from './PlayerJump';
-import { PlayerAttack } from './PlayerAttack';
-import { PlayerWaiting } from './PlayerWaiting';
+import { PlayerMovement } from './player/PlayerMovement';
+import { PlayerJump } from './player/PlayerJump';
+import { PlayerAttack } from './player/PlayerAttack';
+import { PlayerWaiting } from './player/PlayerWaiting';
 
-class PlayerInputManager {
+class InputManager {
     private cursors: Phaser.Types.Input.Keyboard.CursorKeys;
     private keyAlt: Phaser.Input.Keyboard.Key;
     private keyAttack: Phaser.Input.Keyboard.Key;
@@ -53,8 +53,8 @@ class PlayerInputManager {
     }
 
     handleWaiting(entity: Phaser.Physics.Arcade.Sprite) {
-        this.waiting.waiting(entity);
+        this.waiting.handleWaiting(entity);
     }
 }
 
-export { PlayerInputManager };
+export { InputManager };

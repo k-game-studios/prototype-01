@@ -50,7 +50,7 @@ class PlayerAttack {
     }
 
     private shakeScreen() {
-        setTimeout(() => this.scene.cameras.main.zoom = 1.005, 300);
+        setTimeout(() => this.scene.cameras.main.zoom = 1.006, 300);
         setTimeout(() => this.scene.cameras.main.zoom = 1.00, 400);
     }
 

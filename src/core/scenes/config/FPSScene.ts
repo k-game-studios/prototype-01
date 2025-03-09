@@ -19,7 +19,7 @@ export class FPSScene extends BaseScene {
     create() {
         this.time.addEvent({
             delay: 1000,
-            callback: () => {},
+            callback: () => { },
             callbackScope: this,
             loop: true
         });
@@ -29,7 +29,7 @@ export class FPSScene extends BaseScene {
         this.frameCount++;
 
         const elapsedTime = time - this.lastFrameTime;
-    
+
         if (elapsedTime >= 1000) {
             this.fps = this.frameCount;
             this.frameCount = 0;

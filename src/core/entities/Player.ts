@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import { PlayerInputManager } from '../systems/PlayerInputManager';
-import { PlayerAnimationManager } from '../systems/PlayerAnimationManager';
+import { InputManager } from '../systems/InputManager';
+import { AnimationManager } from '../systems/AnimationManager';
 import { CameraManager } from '../systems/CameraManager';
 import { Spritesheet } from './Spritesheet';
 
@@ -19,8 +19,8 @@ interface ConstructorProps {
 
 class Player extends Spritesheet {
     private entity!: Phaser.Physics.Arcade.Sprite;
-    private inputManager!: PlayerInputManager;
-    private animationManager!: PlayerAnimationManager;
+    private inputManager!: InputManager;
+    private animationManager!: AnimationManager;
     private cameraManager!: CameraManager;
 
     constructor(config: ConstructorProps) {
@@ -33,8 +33,9 @@ class Player extends Spritesheet {
 
     create(props: CreateProps) {
         this.createEntity(props.positionX, props.positionY);
-        this.inputManager = new PlayerInputManager(this.scene);
-        this.animationManager = new PlayerAnimationManager(this.scene, this.config.name);
+
+        this.inputManager = new InputManager(this.scene);
+        this.animationManager = new AnimationManager(this.scene, this.config.name);
         this.cameraManager = new CameraManager(this.scene, this.entity);
 
         this.animationManager.create();

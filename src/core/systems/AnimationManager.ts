@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-class PlayerAnimationManager {
+class AnimationManager {
     constructor(private scene: Phaser.Scene, private name: string) { }
 
     create() {
@@ -21,4 +21,4 @@ class PlayerAnimationManager {
     }
 }
 
-export { PlayerAnimationManager };
+export { AnimationManager };

@@ -6,21 +6,28 @@ class PlayerWaiting {
     private waitingTime: number = 10800;
     private readonly incrementTime: number = 14400;
 
-    waiting(entity: Phaser.Physics.Arcade.Sprite) {
+    handleWaiting(entity: Phaser.Physics.Arcade.Sprite) {
         const currentAnimKey = entity.anims.currentAnim?.key;
 
-        if (currentAnimKey !== 'waiting' && currentAnimKey !== 'idle') {
-            this.waitingTime = 5000;
+        if(currentAnimKey !== "waiting" && currentAnimKey !== "idle") {
+            this.waitingTime = 10800;
+            this.lastAnimKey = currentAnimKey ?? null;
+            return;
         }
 
         if (currentAnimKey !== this.lastAnimKey) {
             this.lastAnimKey = currentAnimKey ?? null;
             this.lastAnimChangeTime = Date.now();
-        } else if (this.lastAnimChangeTime && Date.now() - this.lastAnimChangeTime > this.waitingTime) {
+            return;
+        } 
+        
+        if (this.lastAnimChangeTime && Date.now() - this.lastAnimChangeTime > this.waitingTime) {
             if (currentAnimKey !== 'waiting') {
                 entity.play('waiting');
-                this.waitingTime += this.incrementTime;
-                setTimeout(() => entity.play('idle'), 1600 + (this.waitingTime / 10));
+                if (this.waitingTime < 43200) {
+                    this.waitingTime += this.incrementTime;
+                }
+                setTimeout(() => entity.play('idle'), 1400 + (this.waitingTime / 10));
             }
         }
     }
