@@ -17,8 +17,6 @@ interface ConstructorProps {
     scale: number;
 }
 
-let startTime: number | null = null;
-
 class Player extends Spritesheet {
     private entity!: Phaser.Physics.Arcade.Sprite;
     private inputManager!: PlayerInputManager;
