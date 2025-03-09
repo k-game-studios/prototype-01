@@ -1,36 +1,22 @@
-import { PlaygroundScrene } from './core/scenes/PlaygroundScrene';
 import './styles/global.css';
 import Phaser from 'phaser';
+import { PlaygroundScene } from './core/scenes/PlaygroundScene';
+import { FPS_CONFIG, PARENT_CONFIG, PHYSICS_CONFIG, RENDER_CONFIG, SIZE_CONFIG } from './constants/GameConfig';
 
-const physics: Phaser.Types.Core.PhysicsConfig = {
-  default: 'arcade',
-  arcade: {
-    gravity: { y: 4000, x: 0 },
-    debug: true,
-  },
-}
-const config: Phaser.Types.Core.GameConfig = {
+const gameConfig: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
-  parent: 'app',
-  scene: new PlaygroundScrene(),
+  width: SIZE_CONFIG.width,
+  height: SIZE_CONFIG.height,
+  physics: PHYSICS_CONFIG,
+  render: RENDER_CONFIG,
+  fps: FPS_CONFIG,
+  parent: PARENT_CONFIG,
   pixelArt: true,
-  physics: physics,
-  fps: {
-    target: 60,
-    forceSetTimeOut: true
-  },
-  render: {
-    antialias: false, 
-    preserveDrawingBuffer: true,
-    pixelArt: true,
-    clearBeforeRender: true,
-  },
+  scene: new PlaygroundScene(),
 };
 
 function init() {
-  new Phaser.Game(config);
+  new Phaser.Game(gameConfig);
 }
 
 init();

@@ -20,7 +20,9 @@ export class Platforms extends Spritesheet {
             props.positionY,
             this.config.name,
             props.spriteNumber
-        ).setScale(this.config.scale).refreshBody();
+        ).setScale(this.config.scale).refreshBody()
+            .setSize(64, 32)
+            .setOffset(0, 0);
 
     }
 
