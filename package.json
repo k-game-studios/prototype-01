@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "main": "src/config/electron/main.js",
-  "description": "Descrição do seu aplicativo", 
+  "description": "prototype-01 description",
   "scripts": {
     "start:dev": "vite",
     "start:dev:desktop": "electron . --enable-accelerated-2d-canvas --enable-gpu-rasterization --disable-software-rasterizer",
     "build": "tsc && vite build",
-    "build:desktop": "electron-builder",
+    "build:desktop:windows": "electron-builder --win",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -23,13 +23,19 @@
   },
   "build": {
     "appId": "com.exemplo.app",
-    "productName": "Nome do seu app",
+    "productName": "prototype-01",
     "files": [
       "dist/**/*",
       "src/config/electron/main.js"
     ],
     "directories": {
       "output": "build-desktop"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "src/assets/icon.ico"
     }
   }
 }

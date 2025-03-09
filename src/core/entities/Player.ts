@@ -46,7 +46,7 @@ class Player extends Spritesheet {
 
         this.inputManager.handleMovement(isJumping, this.entity);
         this.inputManager.handleJump(isJumping, this.entity);
-        this.inputManager.handleAttack(isJumping, this.entity);
+        this.inputManager.handleAttack(this.entity);
 
         this.checkBounds();
     }

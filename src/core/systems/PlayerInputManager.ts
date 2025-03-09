@@ -31,20 +31,20 @@ class PlayerInputManager {
         }
     }
 
-    handleAttack(isJumping: boolean, entity: Phaser.Physics.Arcade.Sprite) {
-        if (this.keyAttack.isDown && !this.isAttacking && !isJumping) {
+    handleAttack(entity: Phaser.Physics.Arcade.Sprite) {
+        if (this.keyAttack.isDown && !this.isAttacking) {
             this.initiateAttack(entity);
         }
     }
 
     private moveLeft(entity: Phaser.Physics.Arcade.Sprite, isJumping: boolean) {
-        entity.setVelocityX(-220);
+        entity.setVelocityX(-332);
         this.playRunAnimation(isJumping, entity);
         entity.setFlipX(true);
     }
 
     private moveRight(entity: Phaser.Physics.Arcade.Sprite, isJumping: boolean) {
-        entity.setVelocityX(220);
+        entity.setVelocityX(332);
         this.playRunAnimation(isJumping, entity);
         entity.setFlipX(false);
     }
@@ -61,9 +61,11 @@ class PlayerInputManager {
 
     private initiateAttack(entity: Phaser.Physics.Arcade.Sprite) {
         this.isAttacking = true;
-        entity.setVelocityX(0);
         entity.play('attack', true);
 
+        setTimeout(() => {
+            entity.setVelocityX(entity.flipX ? -8 : 8);
+        }, 100)
         setTimeout(() => {
             this.createAttackHitbox(entity);
         }, 300);
