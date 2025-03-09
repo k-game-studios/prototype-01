@@ -52,8 +52,6 @@ class Player extends Spritesheet {
         this.entity = this.scene.physics.add.sprite(startX, startY, this.config.name)
             .setScale(this.config.scale)
             .setCollideWorldBounds(true)
-            .setSize(10, 16)
-            .setOffset(10, 10);
     }
 
     private isOnGround(): boolean {

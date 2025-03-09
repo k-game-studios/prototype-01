@@ -1,13 +1,13 @@
 import Phaser from 'phaser';
 
 class PlayerAnimationManager {
-    constructor(private scene: Phaser.Scene, private name: string) {}
+    constructor(private scene: Phaser.Scene, private name: string) { }
 
     create() {
         this.setup('idle', 0, 3, 6, -1);
-        this.setup('run', 16, 23, 10, -1);
-        this.setup('jump', 18, 20, 18, 0);
-        this.setup('down', 42, 42, 18, -1);
+        this.setup('waiting', 10, 14, 6, -1);
+        this.setup('run', 20, 25, 10, -1);
+        this.setup('jump', 30, 34, 8, 0);
     }
 
     private setup(key: string, startFrame: number, endFrame: number, frameRate: number, repeat: number) {

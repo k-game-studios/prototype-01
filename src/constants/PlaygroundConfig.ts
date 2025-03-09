@@ -5,5 +5,5 @@ export const PLATFORM_CONFIG = {
 
 export const PLAYER_CONFIG = {
     name: "player",
-    path: "assets/sprites/knight.png",
+    path: "assets/sprites/player.png",
 }

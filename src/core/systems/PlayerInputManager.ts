@@ -10,18 +10,11 @@ class PlayerInputManager {
     }
 
     handleMovement(isJumping: boolean, entity: Phaser.Physics.Arcade.Sprite) {
-        if (this.cursors.down.isDown) {
-            entity.setVelocityX(0);
-            this.playAnimationIfNotPlaying('down', isJumping, entity);
-            this.setEntitySize(entity, 10, 8, 10, 18);
-            return;
-        }
-
         if (this.cursors.left.isDown) {
             entity.setVelocityX(-220);
             this.playRunAnimation(isJumping, entity);
             entity.setFlipX(true);
-            this.setEntitySize(entity, 10, 16, 10, 10);
+            this.setEntitySize(entity, 10, 12, 10, 18);
             return;
         }
 
@@ -29,13 +22,13 @@ class PlayerInputManager {
             entity.setVelocityX(220);
             this.playRunAnimation(isJumping, entity);
             entity.setFlipX(false);
-            this.setEntitySize(entity, 10, 16, 10, 10);
+            this.setEntitySize(entity, 10, 12, 10, 18);
             return;
         }
 
         entity.setVelocityX(0);
         this.playAnimationIfNotPlaying('idle', isJumping, entity);
-        this.setEntitySize(entity, 10, 16, 10, 10);
+        this.setEntitySize(entity, 10, 12, 10, 18);
     }
 
     handleJump(isJumping: boolean, entity: Phaser.Physics.Arcade.Sprite) {
