@@ -1,15 +1,9 @@
-### 1. Title and Introduction
-
-
 # 2D Game with Vite + Phaser
 
 This is a scalable and modular architecture for a 2D game using **Vite** and **Phaser**. The project is structured to ensure easy expansion, maintainability, and clear separation of concerns.
 
 
 ### 2. Folder Structure
-
-
-## Folder Structure
 
 ```markdown
 /src
@@ -31,8 +25,6 @@ This is a scalable and modular architecture for a 2D game using **Vite** and **P
 ---
 
 ### 3. Folder Breakdown
-
-## Folder Breakdown
 
 ### `assets/`
 Contains all non-code files such as images, sounds, fonts, and other static assets used in the game.
