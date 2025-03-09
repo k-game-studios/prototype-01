@@ -1,4 +1,12 @@
 import Phaser from 'phaser';
+import { PlayerInputManager } from '../systems/PlayerInputManager';
+import { PlayerAnimationManager } from '../systems/PlayerAnimationManager';
+import { CameraManager } from '../systems/CameraManager';
+
+interface CreateProps {
+    positionX: number;
+    positionY: number;
+}
 
 interface ConstructorProps {
     scene: Phaser.Scene;
@@ -8,13 +16,13 @@ interface ConstructorProps {
     scale: number;
 }
 
-export class Player {
+class Player {
     private scene: Phaser.Scene;
     private entity!: Phaser.Physics.Arcade.Sprite;
     private config: ConstructorProps;
-    private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-    private isJumping: boolean = false;
-    private keyAlt!: Phaser.Input.Keyboard.Key;
+    private inputHandler!: PlayerInputManager;
+    private animationManager!: PlayerAnimationManager;
+    private cameraManager!: CameraManager;
 
     constructor(config: ConstructorProps) {
         this.scene = config.scene;
@@ -28,97 +36,42 @@ export class Player {
         });
     }
 
-    create(startX: number, startY: number) {
-        this.entity = this.scene.physics.add
-            .sprite(startX, startY, this.config.name)
+    create(props: CreateProps) {
+        this.createEntity(props.positionX, props.positionY);
+        this.inputHandler = new PlayerInputManager(this.scene);
+        this.animationManager = new PlayerAnimationManager(this.scene, this.config.name);
+        this.cameraManager = new CameraManager(this.scene, this.entity);
+        this.animationManager.setupAnimations();
+        this.cameraManager.setupCamera();
+    }
+
+    update() {
+        if (!this.inputHandler.cursors) return;
+
+        const isJumping = !this.isOnGround();
+        this.inputHandler.handleMovement(isJumping, this.entity);
+        this.inputHandler.handleJump(isJumping, this.entity);
+        this.checkBounds();
+    }
+
+    private createEntity(startX: number, startY: number) {
+        this.entity = this.scene.physics.add.sprite(startX, startY, this.config.name)
             .setScale(this.config.scale)
             .setCollideWorldBounds(true)
             .setSize(10, 16)
             .setOffset(10, 10);
-
-        if (this.scene.input && this.scene.input.keyboard) {
-            this.cursors = this.scene.input.keyboard.createCursorKeys();
-            this.keyAlt = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ALT);
-        
-        }
-
-        this.scene.anims.create({
-            key: 'idle',
-            frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 0, end: 3 }),
-            frameRate: 6,
-            repeat: -1
-        });
-
-        this.scene.anims.create({
-            key: 'run',
-            frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 16, end: 23 }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.scene.anims.create({
-            key: 'jump',
-            // frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 40, end: 48 }),
-            frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 18, end: 20 }),
-            frameRate: 18,
-            repeat: 0
-        });
-
-        this.scene.anims.create({
-            key: 'down',
-            frames: this.scene.anims.generateFrameNumbers(this.config.name, { start: 42, end: 42 }),
-            frameRate: 18,
-            repeat: 0
-        });
-
-        this.entity.play('idle');
-        this.camera();
     }
 
-    update() {
-        if (!this.cursors) return;
+    private isOnGround(): boolean {
+        return !!(this.entity.body?.blocked.down || this.entity.body?.touching.down);
+    }
 
-        const onGround = this.entity.body?.blocked.down || this.entity.body?.touching.down;
-
-        if (onGround) {
-            this.isJumping = false;
-        }
-
-        if (this.cursors.down.isDown) {
-            this.entity.setVelocityX(0);
-            if (!this.isJumping && this.entity.anims.currentAnim?.key !== 'down') {
-                this.entity.play('down');
-            }
-        } else if (this.cursors.left.isDown) {
-            this.entity.setVelocityX(-220);
-            if (!this.isJumping && this.entity.anims.currentAnim?.key !== 'run') {
-                this.entity.play('run');
-            }
-            this.entity.setFlipX(true);
-        } else if (this.cursors.right.isDown) {
-            this.entity.setVelocityX(220);
-            if (!this.isJumping && this.entity.anims.currentAnim?.key !== 'run') {
-                this.entity.play('run');
-            }
-            this.entity.setFlipX(false);
-        } else {
-            this.entity.setVelocityX(0);
-            if (!this.isJumping && this.entity.anims.currentAnim?.key !== 'idle') {
-                this.entity.play('idle');
-            }
-        }
-
-        if (this.keyAlt.isDown && onGround) {
-            this.entity.setVelocityY(-960);
-            this.isJumping = true;
-            this.entity.play('jump');
-        }
-
-        const playerBounds = this.Entity.getBounds();
+    private checkBounds() {
+        const playerBounds = this.entity.getBounds();
         const worldBounds = this.scene.physics.world.bounds;
 
         if (playerBounds.bottom > worldBounds.bottom) {
-            this.Entity.setPosition(320, 448);
+            this.entity.setPosition(320, 448);
         }
     }
 
@@ -129,9 +82,6 @@ export class Player {
     set Entity(entity: Phaser.Physics.Arcade.Sprite) {
         this.entity = entity;
     }
-
-    camera() {
-        this.scene.physics.world.setBounds(0, 0, 1200, 700);
-        this.scene.cameras.main.startFollow(this.Entity, true, 0.08, 0, 0.1, 132);
-    }
 }
+
+export { Player };

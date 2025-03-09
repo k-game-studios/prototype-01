@@ -6,6 +6,7 @@ interface CreateProps {
     positionX: number;
     positionY: number;
 }
+
 interface ConstructorProps {
     name: string,
     path: string,

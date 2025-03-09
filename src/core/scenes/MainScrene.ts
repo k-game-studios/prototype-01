@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-import { Platforms } from '../systems/Platforms';
+import { Platforms } from '../entities/Platforms';
 import { FPSScene } from './FPSScene';
 import { Player } from '../entities/Player';
 
@@ -73,7 +73,7 @@ export class MainScene extends FPSScene {
         // });
         
 
-        this.player.create(320, 448);
+        this.player.create({ positionX: 320, positionY: 448 });
         this.physics.add.collider(
             this.player.Entity,
             this.platforms.Entity.getChildren()
