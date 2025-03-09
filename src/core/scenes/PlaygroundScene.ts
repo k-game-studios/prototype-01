@@ -55,8 +55,7 @@ class PlaygroundScene extends FPSScene {
             { startX: BASE_X * 31, startY: BASE_Y - (BASE_X * 3), count: 4 },
             { startX: BASE_X * 24, startY: BASE_Y - (BASE_X * 6), count: 1 },
             { startX: BASE_X * 31, startY: BASE_Y - (BASE_X * 9), count: 1 },
-            { startX: BASE_X * 24, startY: BASE_Y - (BASE_X * 12), count: 1 },
-            { startX: BASE_X * 31, startY: BASE_Y - (BASE_X * 15), count: 1 },
+            { startX: BASE_X * 38, startY: BASE_Y - (BASE_X * 12), count: 1 },
         ];
 
         platformPositions.forEach(({ startX, startY, count }) => {

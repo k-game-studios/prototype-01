@@ -25,8 +25,6 @@ class Player extends Spritesheet {
 
     constructor(config: ConstructorProps) {
         super(config);
-        this.scene = config.scene;
-        this.config = config;
     }
 
     preload() {
