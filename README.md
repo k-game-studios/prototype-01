@@ -1,58 +1,100 @@
-# 2D Game with Vite + Phaser
+# **prototype-01**  
 
-This is a scalable and modular architecture for a 2D game using **Vite** and **Phaser**. The project is structured to ensure easy expansion, maintainability, and clear separation of concerns.
+A **2D platformer prototype** built using **Phaser**, **TypeScript**, **Electron**, and **Vite**. The project serves as a foundation for developing platformer games with smooth physics, animations, and desktop integration.  
 
 
-### 2. Folder Structure
+## **1. Technologies Used**  
 
-```markdown
+### **1.1 Core Technologies**  
+- **Phaser 3** – Game engine for 2D games  
+- **TypeScript** – Type-safe JavaScript for better maintainability  
+- **Electron** – Desktop application framework  
+- **Vite** – Fast development and build tool  
+
+### **1.2 Key Features**  
+- **Platformer mechanics**: movement and jumping  
+- **Sprite animations** with frame-based rendering  
+- **Physics-based interactions** using Phaser's arcade physics  
+- **Desktop & Web support** with Electron and Vite  
+- **Game scenes management** using Phaser's Scene API  
+- **Optimized FPS control** with a custom `FPSScene` class  
+
+
+## **2. Features Overview**  
+
+### **2.1 Player Mechanics**  
+- Movement with **cursor keys**  
+- Jumping with collision detection  
+- Smooth animations  
+
+### **2.2 Environment**  
+- **Platforms** dynamically created using a structured layout  
+- **Physics interactions** between player and platforms  
+- **Scene boundaries** to limit movement  
+
+### **2.3 Performance Optimization**  
+- **FPS management** using `FPSScene`  
+- **Preloading assets** for smooth performance  
+
+
+## **3. Project Structure**  
+
+```plaintext
 /src
-  ├── assets/             # Images, audio files, fonts, and other static assets
-  ├── config/             # Global game settings (e.g., constants, game settings)
-  ├── core/               # Core game logic (e.g., scenes, loading system)
-  │   ├── scenes/         # Game scenes (e.g., Menu, Game, GameOver)
-  │   ├── entities/       # Entities like players, NPCs, enemies
-  │   ├── ui/             # UI components (e.g., HUD, buttons)
-  │   ├── systems/        # General game mechanics (e.g., combat, physics)
-  ├── utils/              # Utility functions (e.g., math helpers, ID generators)
-  ├── state/              # State management (e.g., Redux, Zustand, or custom store)
-  ├── services/           # Communication with external services (e.g., API, WebSocket)
-  ├── main.ts             # Main entry point for the game
-  ├── game.ts             # Phaser game setup and initialization
-  ├── index.html          # Base HTML file
+  ├── assets/             # Game assets (sprites, audio, etc.)
+  ├── config/             # Configurations (Electron, FPS settings)
+  ├── constants/          # Game-related constants
+  ├── entities/           # Game objects (Player, Platforms)
+  ├── scenes/             # Game scenes (Main scene, FPS controller)
+  ├── main.ts             # Game entry point
+  ├── game.ts             # Phaser game setup
+  ├── electron/           # Electron configuration
 ```
 
----
 
-### 3. Folder Breakdown
+## **4. Development**  
 
-### `assets/`
-Contains all non-code files such as images, sounds, fonts, and other static assets used in the game.
+### **4.1 Install Dependencies**  
+Using **Yarn** (recommended):  
+```sh
+yarn install
+```
+Or using **npm**:  
+```sh
+npm install
+```
 
-### `config/`
-Stores global game settings, such as screen size, physics settings, constants, etc.
+### **4.2 Start the web version (browser)**
+```sh
+yarn start:dev:web
+```
+Runs the game in a browser using **Vite**.
 
-### `core/`
-This folder contains the main game code, divided into different subfolders:
-- **`scenes/`**: Contains the different scenes of the game (e.g., `MenuScene.ts`, `GameScene.ts`).
-- **`entities/`**: Defines game entities such as players, enemies, NPCs, items, etc.
-- **`ui/`**: Contains UI components like HUD, menus, and buttons.
-- **`systems/`**: Houses various game systems, such as combat, physics, and custom mechanics.
+### **4.3 Start the desktop version (Electron)**
+```sh
+yarn start:dev:desktop
+```
+Runs the game as a **desktop app** with **Electron**.
 
-### `utils/`
-Holds utility functions like math helpers, ID generators, etc., that are used throughout the game.
 
-### `state/`
-Contains the state management logic, which could be custom or use libraries like **Redux** or **Zustand**. It stores the game state (e.g., player progress, scores, etc.).
+## **5. Build & Distribution**  
 
-### `services/`
-Responsible for handling communication with external services, such as APIs or WebSocket for multiplayer or online features.
+### **5.1 Build for Web**
+```sh
+yarn build:prod:web
+```
+Compiles TypeScript and builds the web version.
 
-### `main.ts`
-This file is the entry point for the game. It initializes the game.
+### **5.2 Build for Windows (Electron)**
+```sh
+yarn build:prod:windows
+```
+Generates a `.exe` file for **Windows**.
 
-### `game.ts`
-Sets up the **Phaser** game instance and initializes the scenes.
+## **6. Future Improvements**  
+Enhancements will be introduced in future prototypes based on this one. Check out the next iteration:
+- [prototype-02][]
 
-### `index.html`
-The base HTML file that loads the game.
+
+## **7. License**F  
+This project is licensed under the **MIT License**.  
