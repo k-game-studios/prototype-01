@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import { PlayerMovement } from './player/PlayerMovement';
 import { PlayerJump } from './player/PlayerJump';
-import { PlayerAttack } from './player/PlayerAttack';
 import { PlayerWaiting } from './player/PlayerWaiting';
 
 class InputManager {
@@ -11,7 +10,6 @@ class InputManager {
     private waiting: PlayerWaiting;
     private movement: PlayerMovement;
     private jump: PlayerJump;
-    private attack: PlayerAttack;
 
     constructor(private scene: Phaser.Scene) {
         this.cursors = this.scene.input.keyboard!.createCursorKeys();
@@ -21,12 +19,9 @@ class InputManager {
         this.waiting = new PlayerWaiting();
         this.movement = new PlayerMovement();
         this.jump = new PlayerJump();
-        this.attack = new PlayerAttack(this.scene);
     }
 
     handleMovement(isJumping: boolean, entity: Phaser.Physics.Arcade.Sprite) {
-        if (this.attack.isAttacking) return;
-
         if (this.cursors.left.isDown) {
             return this.movement.moveLeft(entity, isJumping);
         }
@@ -43,12 +38,6 @@ class InputManager {
     handleJump(isJumping: boolean, entity: Phaser.Physics.Arcade.Sprite) {
         if (this.keyAlt.isDown && !isJumping) {
             this.jump.jump(entity);
-        }
-    }
-
-    handleAttack(entity: Phaser.Physics.Arcade.Sprite) {
-        if (this.keyAttack.isDown) {
-            this.attack.handleAttack(entity);
         }
     }
 
