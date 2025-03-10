@@ -93,7 +93,7 @@ Generates a `.exe` file for **Windows**.
 
 ## **6. Future Improvements**  
 Enhancements will be introduced in future prototypes based on this one. Check out the next iteration:
-- [prototype-02][]
+- [prototype-02]()
 
 
 ## **7. License**F  
